@@ -1,19 +1,19 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div class="container">
-    <div class="row">
-        {% for room in rooms %}
-        <div class=" col-sm-12 mb-3">
-           
-            <h3 color>
-                {{room.id}}______
-                <a href="/room/{{room.id}}">{{room.name}}</a>
-            </h3>
-        </div>
-        {% endfor %}
+    <a href="{% url 'create' %}"><h2>CREATE ROOM</h2></a>
+  <div class="row">
+    {% for room in rooms %}
+    <div class="col-sm-12 mb-3 bg-primary-subtle">
+      <span>@{{room.host.username}}</span>
+      <h3 color>
+        {{room.id}}______
+        <a href="/room/{{room.id}}">{{room.name}}</a>
+      </h3>
+      <hr />
+      <small>{{room.topic.name}}</small>
     </div>
+    {% endfor %}
+  </div>
 </div>
-
 
 {% endblock %}
