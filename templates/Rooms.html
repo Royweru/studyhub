@@ -4,6 +4,7 @@
   <div class="row">
     {% for room in rooms %}
     <div class="col-sm-12 mb-3 bg-primary-subtle">
+      <span><a href="{% url 'update' room.id %}">Edit</a></span><br>
       <span>@{{room.host.username}}</span>
       <h3 color>
         {{room.id}}______
