@@ -40,3 +40,9 @@ def update_room(request,pk):
     return render(request, 'Createroom.html',context)
 
     
+def deleteRoom(request,pk):
+    room = Room.objects.get(id=pk)
+    if request.method == 'POST':
+        room.delete()
+        return redirect('rooms')
+    return render(request ,'delete.html', {'obj':room})
