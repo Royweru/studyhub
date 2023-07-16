@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class=" d-flex">
+  <form method="post" action="">
+    {% csrf_token %}
+    <label for="username"> Enter Username: </label>
+    <br />
+    <input
+      id="username"
+      type="text"
+      name="username"
+      placeholder="Enter Username"
+    />
+    <br>
+    <label for="password"> Enter Password: </label>
+    <br>
+    <input
+      id="password"
+      type="password"
+      name="passsword"
+      placeholder="Enter Password"
+    />
+    <br>
+    <input type="submit" value="Login" />
+  </form>
+</div>
+
+{% endblock %}
