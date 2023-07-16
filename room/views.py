@@ -28,7 +28,7 @@ def LoginPage(request):
             messages.error(request, "Username does not exist.")
 
         user = authenticate(request, username=username , password=password)
-        
+
         if user is not None:
             login(request, user)
             return redirect('rooms')
@@ -37,6 +37,9 @@ def LoginPage(request):
 
     return render(request,'login_registration.html')
 
+def LogOut_user(request):
+    logout(request)
+    return redirect('home')
 
 def get_room(request,pk):
     room = Room.objects.get(id=pk)

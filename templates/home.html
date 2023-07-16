@@ -1,3 +1,16 @@
 {% extends 'base.html' %} {% block content %}
-<h1>Hellow world!!</h1>
+<div>
+    {% if request.user.is_authenticated %}
+     <h1>
+        Currently you are loged in!
+     </h1>
+     {% else %}
+     <h1>
+        Seemed like you are loged out!
+     </h1>
+     <h3>
+        <a href="{% url 'login' %}">PLEASE LOGIN</a>
+     </h3>
+     {% endif %}
+</div>
 {% endblock %}

@@ -16,6 +16,7 @@
       {% endfor %}
     </div>
     <div class="col-md-8">
+      <h3><a href="{% url 'create' %}">Create a room now</a></h3>
       <h5>{{room_count}} rooms are available</h5>
       {% for room in rooms %}
       <div class="row bg-info mb-3">
