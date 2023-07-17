@@ -54,13 +54,17 @@ def registerPage(request):
     page = 'register'
     form = UserCreationForm()
 
-    
+
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid:
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
+            login(request, user)
+            return redirect('rooms')
+        else:
+            messages.error(request, 'An error occured during registration')
 
     context = {'page':page, 'form':form}
     return render(request, 'login_registration.html',context)
