@@ -3,7 +3,9 @@ from .models import Room,Topic
 from .forms import RoomForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.db.models import Q
 def room_page(request):
@@ -19,6 +21,11 @@ def room_page(request):
 
 
 def LoginPage(request):
+    page = 'login'
+
+    if request.user.is_authenticated:
+        return redirect('rooms')
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -35,12 +42,28 @@ def LoginPage(request):
             return redirect('rooms')
         else:
             messages.error(request, 'Username and Password does not exist!!')
-
-    return render(request,'login_registration.html')
+    context = {'page':page}
+    return render(request,'login_registration.html', context)
 
 def LogOut_user(request):
     logout(request)
     return redirect('home')
+
+
+def registerPage(request):
+    page = 'register'
+    form = UserCreationForm()
+
+    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid:
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+
+    context = {'page':page, 'form':form}
+    return render(request, 'login_registration.html',context)
 
 @login_required(login_url='login')
 def get_room(request,pk):
@@ -67,6 +90,9 @@ def create_room(request):
 def update_room(request,pk):
     room = Room.objects.get(id=pk)
     form = RoomForm(instance=room)
+    
+    if request.user != room.host:
+        return HttpResponse(f"Get the fuck out of {room.host}'s room please" )
 
     if request.method == 'POST':
         form = RoomForm(request.POST, instance=room)
