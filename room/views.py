@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Room,Topic
+from .models import Room,Topic,Message
 from .forms import RoomForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -59,7 +59,6 @@ def registerPage(request):
         form = UserCreationForm(request.POST)
         if form.is_valid:
             user = form.save(commit=False)
-            user.username = user.username.lower()
             user.save()
             login(request, user)
             return redirect('rooms')
@@ -72,9 +71,18 @@ def registerPage(request):
 @login_required(login_url='login')
 def get_room(request,pk):
     room = Room.objects.get(id=pk)
+    room_messages = room.message_set.all()
     
-    context = {'room':room}
-    return render(request ,'room.html',context )
+    if request.method == 'POST':
+        message = Message.objects.create(
+            user = request.user,
+            room = room,
+            body = request.POST.get('body')
+        )
+        return redirect('room',pk=room.id)
+
+    context = {'room':room, 'room_messages':room_messages}
+    return render(request ,'components/room.html',context )
 
 @login_required(login_url='login')
 def create_room(request):
@@ -87,7 +95,7 @@ def create_room(request):
             return redirect('rooms')
 
     context = {'form': form}
-    return render(request, 'Createroom.html', context)
+    return render(request, 'components/Createroom.html', context)
 
 
 @login_required(login_url='login')

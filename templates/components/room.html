@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% block content %}
 
-<div class="container">
+<div class="container bg-info p-2">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-8">
       <div class="card" style="width: 100%">
         <div class="card-body">
           <h5 class="card-title">{{room.name}}</h5>
@@ -10,8 +10,33 @@
           <p class="card-text">{{room.description}}</p>
         </div>
       </div>
+      <hr />
+      <div>
+        <h1>Conversations</h1>
+        {% for message in room_messages %}
+        <div class="card mt-2 bg-secondary" style="width: 18rem">
+          <div class="card-body">
+            <h5 class="card-title">@{{message.user}}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              {{message.created|timesince}} ago
+            </h6>
+            <p class="card-text">{{message.body}}</p>
+          </div>
+        </div>
+        {% endfor %}
+        {% if request.user.is_authenticated %}
+        <div class="mt-2">
+          <form action="" method="post">
+            {% csrf_token %}
+            <input class="form-control" name="body" type="text" placeholder="Type your message here...."/>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-md-4 bg-dark">
+      <h2 class="text-white">PARTICIPANTS</h2>
     </div>
   </div>
-
-  {% endblock %}
 </div>
+{% endblock %}
