@@ -4,6 +4,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4 bg-secondary">
+      {% if request.user.is_authenticated%}
+      <p>helllow {{request.user}}</p>
+      {% else %}
+      <p>You are not logged in</p>
+      {% endif %}
       <h3>Browse Topics</h3>
       <hr>
       <div class="row mt-2 bg-info">

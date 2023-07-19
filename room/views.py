@@ -17,7 +17,7 @@ def room_page(request):
     topics = Topic.objects.all()
     room_count = rooms.count()
     context = {'rooms':rooms ,'topics':topics, 'room_count':room_count}
-    return render(request, 'Rooms.html',context)
+    return render(request, 'components/Rooms.html',context)
 
 
 def LoginPage(request):
@@ -43,7 +43,7 @@ def LoginPage(request):
         else:
             messages.error(request, 'Username and Password does not exist!!')
     context = {'page':page}
-    return render(request,'login_registration.html', context)
+    return render(request,'components/login_registration.html', context)
 
 def LogOut_user(request):
     logout(request)
@@ -67,7 +67,7 @@ def registerPage(request):
             messages.error(request, 'An error occured during registration')
 
     context = {'page':page, 'form':form}
-    return render(request, 'login_registration.html',context)
+    return render(request, 'components/login_registration.html',context)
 
 @login_required(login_url='login')
 def get_room(request,pk):
@@ -106,7 +106,7 @@ def update_room(request,pk):
         
 
     context= {'form':form}
-    return render(request, 'Createroom.html',context)
+    return render(request, 'components/Createroom.html',context)
 
 
 @login_required(login_url='login')   
@@ -115,4 +115,4 @@ def deleteRoom(request,pk):
     if request.method == 'POST':
         room.delete()
         return redirect('rooms')
-    return render(request ,'delete.html', {'obj':room})
+    return render(request ,'components/delete.html', {'obj':room})
