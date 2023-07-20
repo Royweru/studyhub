@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<div class="container bg-info p-2">
+<div class="container bg-light p-2">
   <div class="row">
     <div class="col-md-8">
       <div class="card" style="width: 100%">
@@ -16,6 +16,9 @@
         {% for message in room_messages %}
         <div class="card mt-2 bg-secondary" style="width: 18rem">
           <div class="card-body">
+            {% if request.user == message.user %}
+            <h6><a href="{% url 'delete-message' message.id %}">Delete</a></h6>
+            {% endif %}
             <h5 class="card-title">@{{message.user}}</h5>
             <h6 class="card-subtitle mb-2 text-body-secondary">
               {{message.created|timesince}} ago
@@ -34,8 +37,12 @@
         {% endif %}
       </div>
     </div>
-    <div class="col-md-4 bg-dark">
+    <div class="col-md-4 bg-info">
       <h2 class="text-white">PARTICIPANTS</h2>
+      <hr>
+      {% for user in participants %}
+        <h4 class="text-danger">@{{user}}</h4>
+      {% endfor %}
     </div>
   </div>
 </div>

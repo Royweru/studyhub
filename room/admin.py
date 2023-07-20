@@ -4,7 +4,7 @@ from .models import Room, Topic, Message
 
 
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('name','description','updated','created')
+    list_display = ('host','topic','name','description','updated','created')
 
 class MessageAdmin(admin.ModelAdmin):
     list_display=('user','room','body','updated','created')

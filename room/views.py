@@ -72,16 +72,17 @@ def registerPage(request):
 def get_room(request,pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all()
-    
+    participants = room.participants.all()
     if request.method == 'POST':
         message = Message.objects.create(
             user = request.user,
             room = room,
             body = request.POST.get('body')
         )
+        room.participants.add(request.user)
         return redirect('room',pk=room.id)
 
-    context = {'room':room, 'room_messages':room_messages}
+    context = {'room':room, 'room_messages':room_messages,'participants':participants}
     return render(request ,'components/room.html',context )
 
 @login_required(login_url='login')
@@ -124,3 +125,11 @@ def deleteRoom(request,pk):
         room.delete()
         return redirect('rooms')
     return render(request ,'components/delete.html', {'obj':room})
+
+@login_required(login_url='login')   
+def deleteMessage(request,pk):
+    message = Message.objects.get(id=pk)
+    if request.method == 'POST':
+        message.delete()
+        return redirect('rooms')
+    return render(request ,'components/delete.html', {'obj':message})
