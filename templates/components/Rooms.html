@@ -1,33 +1,18 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 bg-secondary">
-      {% if request.user.is_authenticated%}
-      <h3 class="text-warning">helllow {{request.user}} !! Welcome</h3>
-      {% else %}
-      <p>You are not logged in</p>
-      {% endif %}
-      <h3>Browse Topics</h3>
-      <hr>
-      <div class="row mt-2 bg-info">
-        <a href="{% url 'rooms' %}">ALL</a>
-      </div>
-      {% for topic in topics %}
-        <div class="row bg-light mb-5 mt-2">
-          <a href="{% url 'rooms' %}?q={{topic.name}}">{{topic.name}}</a>
-        </div>
-      {% endfor %}
-    </div>
-    <div class="col-md-8">
-      <h3><a href="{% url 'create' %}">Create a room now</a></h3>
+{% extends 'base.html' %} {% block content %}
+<div class="container px-3 overflow-hidden">
+  <div class="row gx-4">
+    <div class="col-md-7 me-1">
+      <a href="{% url  'create' %}"
+        ><button type="button" class="btn btn-primary btn-lg">
+          New Room <span><i class="bi bi-plus-circle"></i></span></button
+      ></a>
       <h5>{{room_count}} rooms are available</h5>
       {% for room in rooms %}
-      <div class="row bg-info mb-3">
+      <div class="row bg-info mb-3 p-3 rounded">
         {% if request.user == room.host%}
-        <span><a href="{% url 'update' room.id %}">Edit</a></span><br />
-        <span><a href="{% url 'delete-room' room.id %}">Delete</a></span><br />
+        <a href="{% url 'update' room.id %}"><i class="bi bi-pencil"></i></a>
+        <a href="{% url 'delete-room' room.id %}"><i class="bi bi-trash"></i></a
+        ><br />
         {% endif %}
         <span>@{{room.host.username}}</span>
         <h3 color>
@@ -39,8 +24,10 @@
       </div>
       {% endfor %}
     </div>
-    
+
+    <div class="col-md-4 bg-primary p-1 bg-danger p-3 rounded">
+      {% include 'sections/activities.html' %}
+    </div>
   </div>
 </div>
 {% endblock %}
-

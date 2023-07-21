@@ -3,45 +3,25 @@
 <div class="container bg-light p-2">
   <div class="row">
     <div class="col-md-8">
-      <div class="card" style="width: 100%">
-        <div class="card-body">
-          <h5 class="card-title">{{room.name}}</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary">{{room.topic}}</h6>
-          <p class="card-text">{{room.description}}</p>
-        </div>
-      </div>
+      {% include 'sections/roomdesc.html' %}
       <hr />
       <div>
         <h1>Conversations</h1>
-        {% for message in room_messages %}
-        <div class="card mt-2 bg-secondary" style="width: 18rem">
-          <div class="card-body">
-            {% if request.user == message.user %}
-            <h6><a href="{% url 'delete-message' message.id %}">Delete</a></h6>
-            {% endif %}
-            <h5 class="card-title">@{{message.user}}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">
-              {{message.created|timesince}} ago
-            </h6>
-            <p class="card-text">{{message.body}}</p>
-          </div>
-        </div>
-        {% endfor %}
-        {% if request.user.is_authenticated %}
+        
+        {% for message in room_messages %} 
+         {% include 'sections/messcard.html' %}
+        {% endfor %} {% if request.user.is_authenticated %}
         <div class="mt-2">
-          <form action="" method="post">
-            {% csrf_token %}
-            <input class="form-control" name="body" type="text" placeholder="Type your message here...."/>
-          </form>
+          {% include 'sections/messinput.html' %}
         </div>
         {% endif %}
       </div>
     </div>
     <div class="col-md-4 bg-info">
       <h2 class="text-white">PARTICIPANTS</h2>
-      <hr>
+      <hr />
       {% for user in participants %}
-        <h4 class="text-danger">@{{user}}</h4>
+      <h4 class="text-danger">@{{user}}</h4>
       {% endfor %}
     </div>
   </div>
