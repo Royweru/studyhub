@@ -1,0 +1,14 @@
+<div class="row bg-info mb-3 p-3 rounded">
+    {% if request.user == room.host%}
+    <a href="{% url 'update' room.id %}"><i class="bi bi-pencil"></i></a>
+    <a href="{% url 'delete-room' room.id %}"><i class="bi bi-trash"></i></a
+    ><br />
+    {% endif %}
+    <span>@{{room.host.username}}</span>
+    <h3 color>
+      {{room.id}}______
+      <a href="/room/{{room.id}}">{{room.name}}</a>
+    </h3>
+    <hr />
+    <small>{{room.topic.name}}</small>
+  </div>
