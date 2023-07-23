@@ -4,7 +4,7 @@
     <a href="{% url 'delete-room' room.id %}"><i class="bi bi-trash"></i></a
     ><br />
     {% endif %}
-    <span>@{{room.host.username}}</span>
+    <a href="/profile/{{room.host.id}}">@{{room.host.username}}</a>
     <h3 color>
       {{room.id}}______
       <a href="/room/{{room.id}}">{{room.name}}</a>
