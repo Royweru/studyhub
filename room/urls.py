@@ -9,7 +9,7 @@ urlpatterns = [
 
     path('room/', views.room_page, name='rooms'),
     path('room/<str:pk>/', views.get_room, name='room'),
-    path('profile/<int:pk>/', views.userProfile, name='user-profile'),
+    path('profile/<str:pk>/', views.userProfile, name='user-profile'),
     
     
     path('create-room/', views.create_room, name='create'),
