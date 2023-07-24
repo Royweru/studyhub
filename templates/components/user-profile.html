@@ -1,17 +1,17 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container px-3 overflow-hidden">
   <div class="row ">
-    <div class="col-md-4 bg-secondary ">
-     
+    <div class="col-md-3 bg-secondary me-1 ">
+     {% include 'sections/topics.html' %}
     </div>
 
-    <div class="col-md-5 bg-primary  bg-danger p-3 rounded">
+    <div class="col-md-5 me-1 bg-primary  bg-danger p-3 rounded">
         {% for room in rooms %}
         {% include 'sections/feeds.html' %}
         {% endfor %}
     </div>
     <div class="col-md-3 bg-primary  bg-danger p-3 rounded">
-     
+      {% include 'sections/activities.html' %}
     </div>
   </div>
 </div>
